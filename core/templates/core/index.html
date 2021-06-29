@@ -1,0 +1,104 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}
+  Welcome
+{% endblock title %}
+{% block content %}
+
+
+  <section id="top_banner">
+
+    <div class="row mx-4 pb-5">
+        <div class="col-md-5 col-12 order-md-1 order-2 my-auto pt-5">
+            <p class="top_line">iPhone sellers</p>
+            <h1>93 Mobiles</h1>
+            <p><small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi incidunt,
+                image-removebg-preview nam nostrum recusandae omnis enim hic optio repellat eligendi, officiis repellendus. Sapiente eveniet minus ipsam.</small></p>
+
+
+            <a href="{% url 'all_list' %}" class="btn_main">Products </a>
+            <a href="{% url 'deals' %}" class="btn_main_se ms-3">Offers</a>
+
+        </div>
+        <div class="col-md-5 col-12 order-md-2 order-1 mx-auto my-auto pt-5">
+            <img src="{% static 'images/image-removebg-preview.png'%}" alt="">
+        </div>
+    </div>
+  </section>
+  <section id="iphone_series" class="mt-5 mx-4">
+    <h3 class="text-center mb-3">iPhone Series</h3>
+    <div class="row gx-4 gy-4">
+
+        {% for serie in series  %}
+        <div class="col-md-4 col-12">
+            <div class="card_main">
+                <a href="{% url 'series_iphone' serie.slug %}">
+                    <div class="card_body">
+                        <div class="img">
+
+                        <img src="{{serie.logo_serie.url}}" alt="">
+                        </div>
+                        <div class="text-center">
+                            <p class="name">{{serie.series_name}} series</p>
+                            <p class="price">Form: ₹{{serie.starting_from}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        <p class="text-center mt-5"><a href="{% url 'all_series' %}">See all Series </a></p>
+
+    </div>
+  </section>
+
+  <section id="iphone_banners" class="mt-5 mx-4">
+    <h3 class="text-center mb-3">Latest Deals</h3>
+    <div class="row gx-4 gy-4">
+
+      {% for deal in latest_deals %}
+        {% for product in latest_products %}
+          {% if product.id == deal.i_product %}
+          <div class="col-md-4 col-12">
+              <div class="card_main">
+                  <a href="{% url 'product_view' product.id product.name.slug %}">
+                      <div class="card_body">
+                          <img src="{{product.main_image.url}}" alt="">
+                          <div class="text-center">
+                              <p>{{product.name}}</p>
+                              <p>₹ {{product.new_price}}</p>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      <p class="text-center mt-5"><a href="{% url 'deals' %}">See all Deals </a></p>
+    </div>
+  </section>
+
+
+  <section id="iphone_banners" class="mt-5 mx-4">
+    <h3 class="text-center mb-3">Latest Arrivals</h3>
+    <div class="row gx-4 gy-4">
+      {% for latest_product in latest_products  %}
+      <div class="col-md-4 col-12">
+          <div class="card_main">
+              <a href="{% url 'product_view' latest_product.id latest_product.name.slug %}">
+                  <div class="card_body">
+                      <img src="{{latest_product.main_image.url}}" alt="">
+                      <div class="text-center">
+                          <p>{{latest_product.name}}</p>
+                          <p>₹{{latest_product.new_price}}</p>
+                      </div>
+                  </div>
+              </a>
+          </div>
+      </div>
+      {% endfor %}
+      <p class="text-center mt-5"><a href="{% url 'all_list' %}">See all Products </a></p>
+    </div>
+  </section>
+{% endblock content %}

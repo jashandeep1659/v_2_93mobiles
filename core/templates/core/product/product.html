@@ -1,0 +1,148 @@
+{% extends "core/base.html" %}
+{% block title %}
+{{product.name}}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<!-- owl Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+<section style="margin-top:56px">
+  <nav class="border pt-3 mb-0 mx-0 px-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'series_iphone' product.name.of_series.slug %}">{{product.name.of_series }} series </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'list' product.name.slug %}">{{product.name }} list </a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
+  </ol>
+</nav>
+  <div class="row mx-4">
+    <div class="col-md-6 col-12 pt-4">
+      <div class="owl-carousel owl-carousel1 owl-theme">
+    <div class="item">
+      <img src="{{product.main_image.url}}" alt="">
+    </div>
+    {% for image in product_images %}
+      {% if image.proudct_name.id == product.id %}
+      <div class="item">
+        <img src="{{image.product_image.url}}" alt="">
+      </div>
+      {% endif %}
+    {% endfor %}
+</div>
+    </div>
+    <div class="col-md-6 col-12 pt-4">
+      <small><strong class="text-danger">Discount of:<span class="ms-2">{{product.discount}} </span></strong></small>
+      <h5>{{product.name}}</h5>
+    <p class="mb-2 text-muted text-uppercase small">{{product.color}}</p>
+
+    <p><span class="mr-1" style="text-decoration:line-through">₹{{product.older_price}}</span><span class="ms-2 h4"><strong>₹{{product.new_price}}</strong></span></p>
+    <p class="pt-1 mx-2">{{product.special_note}}</p>
+    <div class="table-responsive">
+      <table class="table table-md table-borderless mb-0">
+        <tbody>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Colour</strong></th>
+            <td>{{product.color}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Condition</strong></th>
+            <td>{{product.condition}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Battery </strong></th>
+            <td>{{product.battery_health}}%</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Storage</strong></th>
+            <td>{{product.storage}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Processor</strong></th>
+            <td>{{product.name.processor}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>camera</strong></th>
+            <td>{{product.name.camera}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>ip rating</strong></th>
+            <td>{{product.name.ratings_ips}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Display</strong></th>
+            <td>{{product.name.display}}</td>
+          </tr>
+          <tr>
+            <th class="pl-0 w-25" scope="row"><strong>Panel type</strong></th>
+            <td>{{product.name.display_panel_type}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <p class="text-success"><strong>You are saving: <span class="ms-1">₹{{product.you_save}}</span></strong></p>
+    <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Make Deal</button>
+    </div>
+  </div>
+
+
+
+
+<section id="other_products" class="mb-5 mt-5">
+  <div class="main_similiar mx-4">
+    <h5>Similar iPhones</h5>
+    <div class="owl-carousel owl-carousel2 owl-theme">
+
+    {% for latest_product in latest_products  %}
+      {% if latest_product.name == product.name %}
+      <div class="item border">
+        <a href="{% url 'product_view'  latest_product.id latest_product.name.slug %}">
+        <div class="card_main py-2 px-1">
+          <img src="{{latest_product.main_image.url}}" alt="" style="width:70%; margin:0 auto;">
+          <p class="m-0 text-center">{{latest_product.name}}</p>
+          <p class="m-0 text-center">₹{{latest_product.new_price}}</p>
+          <p class="m-0 text-center">{{latest_product.storage}}</p>
+
+        </div>
+        </a>
+      </div>
+      {% endif %}
+    {% endfor %}
+</div>
+  </div>
+  <div class="main_similiar mx-4 mt-4">
+    <h5>Other Products of  {{product.name.of_series}} Series</h5>
+    <div class="owl-carousel owl-carousel2 owl-theme">
+      {% for latest_product in latest_products  %}
+        {% if latest_product.name.of_series == product.name.of_series %}
+      <div class="item border">
+        <a href="{% url 'product_view'  latest_product.id latest_product.name.slug %}">
+        <div class="card_main py-2 px-1">
+          <img src="{{latest_product.main_image.url}}" alt="" style="width:70%; margin:0 auto;">
+          <p class="m-0 text-center">{{latest_product.name}}</p>
+          <p class="m-0 text-center">₹{{latest_product.new_price}}</p>
+          <p class="m-0 text-center">{{latest_product.storage}}</p>
+
+        </div>
+        </a>
+      </div>
+      {% endif %}
+    {% endfor %}
+</div>
+  </div>
+</section>
+
+
+  <!-- owl Carousel -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static "js/swiper.js" %}" charset="utf-8"></script>
+
+</section>
+{% endblock %}

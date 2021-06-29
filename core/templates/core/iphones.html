@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% block title %}
+{{serie}} list
+{% endblock %}
+{% block content %}
+  <section style="margin-top:56px">
+    <nav class="border pt-3 mb-0 mx-0 px-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'series_iphone' serie.of_series.slug %}">{{serie.of_series}} series</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{serie}} list</li>
+    </ol>
+  </nav>
+
+
+    <div class="row mx-md-4 pt-4 gx-md-4 gy-md-4 gx-2 gy-2 mx-2">
+
+
+
+      {% for iphone in iphones %}
+        {% if iphone.name == serie %}
+        <div class="col-md-4 col-6">
+          <div class="card_main">
+            <a href="{% url 'product_view' iphone.id iphone.name.of_series.slug %}">
+            <div class="card_body">
+              <img src="{{iphone.main_image.url}}" alt="">
+              <div class="text-center">
+                <p class="name m-0">{{iphone.name}}</p>
+                <p class="price">{{iphone.new_price}}</p>
+              </div>
+            </div>
+            </a>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+
+
+    </div>
+  </section>
+{% endblock %}

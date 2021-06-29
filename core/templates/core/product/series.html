@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% block title %}
+  iPhone Series
+{% endblock %}
+
+{% block content %}
+<section id="iphone_series" class="mx-4" style="margin-top:56px">
+  <h3 class="text-center pt-3 mb-3">iPhone Series</h3>
+  <div class="row gx-4 gy-4 mx-auto">
+
+      {% for serie in series  %}
+      <div class="col-md-12 col-12">
+          <div class="card_main">
+              <a href="{% url 'series_iphone' serie.slug %}">
+                  <div class="card_body">
+                      <div class="img">
+
+                      <img src="{{serie.logo_serie.url}}" alt="">
+                      </div>
+                      <div class="text-center">
+                          <p class="name">{{serie.series_name}} series</p>
+                          <p class="price">Form: ₹{{serie.starting_from}}</p>
+                      </div>
+                  </div>
+              </a>
+          </div>
+      </div>
+      {% endfor %}
+
+  </div>
+</section>
+
+{% endblock %}
