@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-28mooj#&eb58rrz!2lhk+lj&tv)#5zdfpv09u%1^c!_2gs=-wp
 DEBUG = True
 
 # ALLOWED_HOSTS = ['192.168.43.38',]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mobiles93-testing.herokuapp.com']
 
 
 # Application definition
